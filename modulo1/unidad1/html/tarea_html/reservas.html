@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Reservar - RentaCar</title>
+        <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon">
+    </head>
+    <body bgcolor="#CCC9ED">
+        <header>
+            <h1>RentaCar</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="reservas.html">Reservar</a></li>
+                <li><a href="acerca.html">Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+        <main>
+            <h2><em>Reservar</em></h2>
+            <table border="1" align="center">
+                <caption><h3><em>Vehiculos disponibles</em></h3></caption>
+                <thead bgcolor="#7566B7">
+                    <tr>
+                        <th>Galeria</th>
+                        <th>Modelo</th>
+                        <th>Costo por dia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <figure>
+                                <img src="imagenes/toyota yaris cross.png" alt="toyota yaris cross"
+                                width="250"
+                                height="150">
+                            </figure>
+                        </td>
+                        <td align="center">Toyota Yaris Cross</td>
+                        <td align="center">$75</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <figure>
+                                <img src="imagenes/Mazda 3.png" alt="Mazda 3"
+                                width="250"
+                                height="150">
+                            </figure>
+                        </td>
+                        <td align="center">Mazda 3 Hatchback</td>
+                        <td align="center">$85</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <figure>
+                                <img src="imagenes/BYD-SEAGULL.png" alt="BYD-SEAGULL"
+                                width="250"
+                                height="150">
+                            </figure>
+                        </td>
+                        <td align="center">BYD-SEAGULL</td>
+                        <td align="center">$100</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <figure>
+                                <img src="imagenes/Hyundai-Tucson.png" alt="Hyundai-Tucson"
+                                width="250"
+                                height="150">
+                            </figure>
+                        </td>
+                        <td align="center">Hyundai Tucson</td>
+                        <td align="center">$110</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <figure>
+                                <img src="imagenes/kia-sportage.png" alt="kia-sportage"
+                                width="250"
+                                height="150">
+                            </figure>
+                        </td>
+                        <td align="center">Kia Sportage</td>
+                        <td align="center">$115</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <figure>
+                                <img src="imagenes/Ford F-150 Lariat.png" alt="Ford F-150"
+                                width="250"
+                                height="150">
+                            </figure>
+                        </td>
+                        <td align="center">Ford F-150 Lariat</td>
+                        <td align="center">$150</td>
+                    </tr>
+                    <tr>
+                        <td><figure>
+                            <img src="imagenes/Equinox EV.png" alt="Equinox EV"
+                            width="250"
+                            height="150">
+                        </figure></td>
+                        <td align="center">Equinox EV</td>
+                        <td align="center">$160</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <table border="1" align="center">
+                <caption><h3><em>Seguros</em></h3></caption>
+                <thead bgcolor="#7566B7">
+                    <th>Seguro</th>
+                    <th>Costo por dia</th>
+                    <th>Deducible</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Plata</td>
+                        <td>$40</td>
+                        <td>$2000</td>
+                    </tr>
+                    <tr>
+                        <td>Oro</td>
+                        <td>$60</td>
+                        <td>$1500</td>
+                    </tr>
+                    <tr>
+                        <td>Diamante</td>
+                        <td>$80</td>
+                        <td>$1000</td>
+                    </tr>
+                </tbody>
+            </table>
+            <section>
+                <h3><em>Formulario de Reserva</em></h3>
+                <form action="procesar.php" method="post">
+                    <fieldset>
+                        <legend>Datos personales</legend>
+
+                        <label for="nombre">Nombre:</label><br>
+                        <input type="text" id="nombre" name="nombre" required><br><br>
+
+                        <label for="apellido">Apellido</label><br>
+                        <input type="text" id="apellido" name="apellido" required><br><br>
+
+                        <label for="correo">Correo electronico:</label><br>
+                        <input type="email" id="correo" name="correo" required><br><br>
+
+                        <label for="telefono">Celular:</label><br>
+                        <input type="number" id="telefono" name="telefono"><br><br>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Información del vehiculo:</legend>
+                        <p>Modelo del vehiculo</p>
+                        <input type="radio" id="auto" name="vehiculo" value="auto">
+                        <label for="auto">Toyota Yaris Cross</label><br>
+
+                        <input type="radio" id="suv" name="vehiculo" value="suv">
+                        <label for="suv">Mazda 3 Hatchback</label><br>
+
+                        <input type="radio" id="camioneta" name="vehiculo" value="camioneta">
+                        <label for="camioneta">BYD-SEAGULL</label><br>
+
+                        <input type="radio" id="auto" name="vehiculo" value="auto">
+                        <label for="auto">Hyundai Tucson</label><br>
+
+                        <input type="radio" id="suv" name="vehiculo" value="suv">
+                        <label for="suv">Kia Sportage</label><br>
+
+                        <input type="radio" id="camioneta" name="vehiculo" value="camioneta">
+                        <label for="camioneta">Ford F-150 Lariat</label><br>
+
+                        <input type="radio" id="auto" name="vehiculo" value="auto">
+                        <label for="auto">Equinox EV</label><br><br>
+
+                        <label for="seguros">Elige el tipo de seguro que prefieres:</label><br>
+                        <input type="checkbox" id="plata" name="segurps" value="plata">
+                        <label for="plata">Plata</label><br>
+
+                        <input type="checkbox" id="oro" name="seguros" value="oro">
+                        <label for="oro">Oro</label><br>
+
+                        <input type="checkbox" id="diamante" name="seguros" value="diamante">
+                        <label for="diamante">Diamante</label><br><br>
+
+                        <label for="ciudad">Ciudad de retiro:</label><br>
+                        <select id="ciudad" name="ciudad">
+                            <option value="Seleccione ..."></option>
+                            <option value="quito">Quito</option>
+                            <option value="guayaquil">Guayaquil</option>
+                            <option value="cuenca">Cuenca</option>
+                        </select><br><br>
+
+                        <label for="fecha">Fecha de retiro:</label><br>
+                        <input type="date" id="fecha" name="fecha"><br><br>
+
+                        <label for="comentarios">Comentarios:</label><br>
+                        <textarea id="comentarios" name="comentarios" rows="4" cols="30"></textarea><br><br>
+
+                        <input type="checkbox" id="acepto"  name="acepto" required>
+                        <label for="acepto">Acepto terminos y condiciones</label><br> <br>
+                        <button type="submit">Enviar</button>
+                        <button type="reset">Limpiar</button>
+
+                    </fieldset>
+                </form>
+            </section>
+
+        </main>
+        <footer>
+            <hr>
+            <p>&copy; 2025 | Todos los derechos reservados</p>
+        </footer>
+    </body>
+</html>
