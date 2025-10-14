@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Contacto - RentaCar</title>
+        <link rel="icon" href="imagenes/favicon.ico" type="image/x-icon">
+    </head>
+    <body bgcolor="#CCC9ED">
+        <header>
+            <h1><em>RentaCar</em></h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="reservas.html">Reservar</a></li>
+                <li><a href="acerca.html">Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+        <main>
+            <h2><em>Contacto</em></h2>
+            <form action="procesar.php" method="post">
+                <fieldset>
+                    <legend>Datos personales</legend>
+
+                    <label for="nombre">Nombre:</label><br>
+                    <input type="text" id="nombre" name="nombre" required><br><br>
+
+                    <label for="apellido">Apellido</label><br>
+                    <input type="text" id="apellido" name="apellido" required><br><br>
+
+                    <label for="correo">Correo electronico:</label><br>
+                    <input type="email" id="correo" name="correo" required><br><br>
+
+                    <label for="telefono">Celular:</label><br>
+                    <input type="number" id="telefono" name="telefono"><br><br>
+
+                    <button type="submit">Enviar</button>
+                    <button type="reset">Limpiar</button>
+                </fieldset>
+            </form>
+            
+            <section>
+                <address><br><strong><em>Si deseas contactarte directamente con un asesor haz clic aqui: 
+                    <a href="mailto:melanie.estevez@ute.edu.ec" target="_blank" rel="noopener">contacto@rentacar.com</a></em></strong>
+                </address><br>
+
+                <address><strong><em>Tambien puedes contactarnos por:
+                    <a href="https://wa.me/593992788442" target="_blank" rel="noopener">WhatsApp</a></em></strong>
+                </address><br>
+
+            </section>
+
+        </main>
+        <footer>
+            <hr>
+            <p>&copy; 2025 | Todos los derechos reservados</p>
+        </footer>
+    </body>
+</html>
