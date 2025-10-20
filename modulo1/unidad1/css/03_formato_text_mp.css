@@ -1,0 +1,26 @@
+.texto_primario{
+    color:aqua;
+    background-color: blue;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    line-height:1.5;
+    text-decoration: underline;
+    text-transform: uppercase;
+    letter-spacing:4x;
+    word-spacing: 2px;
+    white-space: nowrap;
+}
+
+.texto_secundario{
+    color:crimson;
+    background-color: lightcoral;
+    font-size: 14px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    text-transform: lowercase;
+    text-decoration: line-through;
+    letter-spacing: 1px;
+    word-spacing: 1px;
+    white-space: nowrap;
+}
