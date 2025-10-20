@@ -1,0 +1,20 @@
+div p{
+    color: lightcoral;
+    background-color: beige;
+    text-align:center;
+}
+ul > li {
+    color:#6500D1;
+    background-color:#DAB8FF;
+    text-align: center;
+}
+
+a:hover{
+    color: green;
+    text-decoration: underline;
+}
+
+input[type="text"]{
+    border:2px solid red;
+    padding: 5px;
+}
