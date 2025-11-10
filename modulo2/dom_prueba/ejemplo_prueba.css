@@ -1,0 +1,28 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color:white;
+    padding:20px;
+}
+.caja {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 20px 5px rgba(0,0,0,0.1);
+    width: 450px;
+}
+
+input {
+    width: 50px;
+    margin-right: 5px;
+    text-align: center;
+}
+button {
+    margin-left: 5px;
+}
+#resultado {
+    margin-top: 10px;
+    font-weight: bold;
+    color: green;
+}
+
