@@ -1,0 +1,26 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 20px;
+  color: #222;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+input, button {
+  padding: 5px;
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+button {
+  cursor: pointer;
+}
+
+#resultado {
+  margin-top: 15px;
+  line-height: 1.6;
+  font-weight: bold;
+  color: green;
+}

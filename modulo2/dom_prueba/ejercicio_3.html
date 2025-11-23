@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio 3: Cambiar estilo del texto</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h2>Ejercicio 3: Cambiar estilo del texto</h2>
+  <p>Selecciona un color y tamaño para modificar el estilo de un mensaje.</p>
+
+  <div class="controls">
+    <select id="colorSelect">
+      <option value="black">Negro</option>
+      <option value="red">Rojo</option>
+      <option value="blue">Azul</option>
+      <option value="green">Verde</option>
+    </select>
+
+    <select id="sizeSelect">
+      <option value="14px">14px</option>
+      <option value="16px">16px</option>
+      <option value="18px">18px</option>
+      <option value="20px">20px</option>
+    </select>
+
+    <button id="applyBtn">Aplicar Estilo</button>
+  </div>
+
+  <p id="message">Este texto cambiará su estilo según tu elección.</p>
+
+  <script src="script.js"></script>
+</body>
+</html>
