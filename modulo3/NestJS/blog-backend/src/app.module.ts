@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CategoriesModule } from './categories/categories.module';
 import { PostsModule } from './posts/posts.module';
+import { BasicsModule } from './basics/basics.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { PostsModule } from './posts/posts.module';
       //ssl: { rejectUnauthorized: false },
     }),
     AuthModule,
+    BasicsModule,
     UsersModule,
     CategoriesModule,
     PostsModule,

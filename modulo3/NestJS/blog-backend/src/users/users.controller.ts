@@ -27,17 +27,25 @@ export class UsersController {
   async findAll(
     @Query('page') page = 1,
     @Query('limit') limit = 10,
-    @Query('isActive') isActive?: string,
-  ): Promise<SuccessResponseDto<Pagination<User>>> {
-    if (isActive !== undefined && isActive !== 'true' && isActive !== 'false') {
-      throw new BadRequestException('Invalid value for "isActive". Use "true" or "false".');
-    }
-    const result = await this.usersService.findAll({ page, limit }, isActive === 'true');
-    if (!result) throw new InternalServerErrorException('Could not retrieve users');
+    @Query('search') search?: string,
+    @Query('searchField') searchField = 'name',
+    @Query('sortBy') sortBy = 'id',
+    @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'ASC',
+  ) {
+    limit = Number(limit);
+    page = Number(page);
+    limit = limit > 100 ? 100 : limit;
 
-    return new SuccessResponseDto('Users retrieved successfully', result);
+    const users = await this.usersService.findAll({
+      page,
+      limit,
+      search,
+      searchField,
+      sortBy,
+      sortOrder,
+    });
+    return new SuccessResponseDto('List Users successfully', users);
   }
-
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const user = await this.usersService.findOne(id);
@@ -79,43 +87,3 @@ export class UsersController {
     return new SuccessResponseDto('Profile image updated', user);
   }
 }
-
-
-
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
-import { LoginDto } from './dto/login.dto';
-import { CreateUserDto } from '../users/dto/create-user.dto';
-import * as bcrypt from 'bcrypt';
-import { User } from 'src/users/user.entity';
-
-@Injectable()
-export class AuthService {
-  constructor(
-    private readonly usersService: UsersService,
-    private readonly jwtService: JwtService,
-  ) { }
-
-  async login(loginDto: LoginDto): Promise<string | null> {
-    try {
-      const user: User | null = await this.usersService.findByUsername(loginDto.username);
-      if (!user) return null;
-      const isValid = await bcrypt.compare(loginDto.password, user.password);
-      if (!isValid) return null;
-      const payload = { id: user.id, username: user.username };
-      return this.jwtService.sign(payload);
-    } catch (err) {
-      console.error('Unexpected login error:', err);
-      return null;
-    }
-  }
-
-  async register(createUserDto: CreateUserDto): Promise<string | null> {
-    const user = await this.usersService.create(createUserDto);
-    if (!user) return null;
-    const payload = { id: user.id, email: user.username };
-    return this.jwtService.sign(payload);
-  }
-}
-
