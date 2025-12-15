@@ -1,27 +1,14 @@
+import { useState } from 'react';
+import { LoginContext } from './useContext/LoginContext';
+import LoginStatus from './useContext/LoginStatus';
 
-import AccessWithLimit from "./useState/AccessWithLimit";
-import CheckboxSummary from "./useState/CheckBoxSummary";
-import DocumentTitleChanger from "./useState/DocumentTitleChanfer";
-import HoverFont from "./useState/HoverFont";
-import LanguageSwitcher from "./useState/LanguageSwitcher";
-import LoginWithLimit from "./useState/LoginWithLimit";
-import MultiSwitch from "./useState/MultiSwitch";
-import PostLikes from "./useState/PostLikes";
-
-function App() {
+export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const toggleLogin = () => setIsLoggedIn(prev => !prev);
 
   return (
-    <>
-      <HoverFont/>
-      <AccessWithLimit/>
-      <LoginWithLimit/>
-      <DocumentTitleChanger/>
-      <PostLikes/>
-      <CheckboxSummary/>
-      <LanguageSwitcher/>
-      <MultiSwitch/>
-    </>
+    <LoginContext.Provider value={{ isLoggedIn, toggleLogin }}>
+      <LoginStatus />
+    </LoginContext.Provider>
   );
 }
-
-export default App;
