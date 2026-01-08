@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function SumaForm() {
+export default function AreaPentagono() {
   const [numero1, setNumero1] = useState(0);
   const [numero2, setNumero2] = useState(0);
 

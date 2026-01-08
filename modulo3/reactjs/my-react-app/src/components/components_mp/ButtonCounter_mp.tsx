@@ -6,6 +6,7 @@ export default function ButtonCounter(){
     const decrement = ()=> setCount(count > 0 ? count - 1 : 0);
     return (
         <div>
+            <h3>{count} productos:</h3>
             <button onClick = {decrement}> - </button>
             <span>  {count}   </span>
             <button onClick = {increment}> + </button>
