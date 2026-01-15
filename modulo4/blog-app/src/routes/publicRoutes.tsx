@@ -1,8 +1,8 @@
+import { Home } from "../pages/public/Home";
 
+import PublicLayout from "../layouts/PublicLayout";
 import type { RouteObject } from "react-router-dom";
-import PublicLayout from "../layout/PublicLayout";
-import { Home } from "@mui/icons-material";
-import { PostDetail } from "../pages/private/PostDetails";
+import { PostDetail } from "../pages/private/PostDetail";
 
 export const publicRoutes: RouteObject = {
   path: "/",

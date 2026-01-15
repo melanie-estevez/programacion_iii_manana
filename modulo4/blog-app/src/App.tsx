@@ -3,9 +3,6 @@ import { appRoutes } from "./routes";
 import type { JSX } from "react";
 
 export default function App(): JSX.Element {
-  <>
- 
-  <Route path="post/:id" element={<PostDetail />} />
+  const routes = useRoutes(appRoutes);
   return <>{routes}</>;
-  </>
 }
