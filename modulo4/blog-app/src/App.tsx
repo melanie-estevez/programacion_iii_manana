@@ -1,8 +1,24 @@
 import { useRoutes } from "react-router-dom";
-import { appRoutes } from "./routes";
+import { appRoutes } from "./routes/app.routes";
 import type { JSX } from "react";
+import { AuthProvider } from "./context/AuthContext";
 
 export default function App(): JSX.Element {
   const routes = useRoutes(appRoutes);
-  return <>{routes}</>;
+  return <AuthProvider>{routes}</AuthProvider>;
 }
+
+/*import type { JSX } from "react";
+import TestMUI from "./lab/TestMUI";
+import ColorSwitches from "./lab/ColorSwitches";
+import BasicButtons from "./lab/BasicButtons";
+import BasicTable from "./lab/BasicTable";
+
+export default function App(): JSX.Element {
+  return <>
+  <TestMUI/>
+  <BasicButtons/>
+  <ColorSwitches/>
+  <BasicTable/>
+  </>;
+}*/
