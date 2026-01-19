@@ -25,6 +25,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { type PostDto, createPost, deletePost, getPosts, updatePost } from "../../services/posts.service";
 import PostFormDialog from "../../components/posts/PostFormDialog";
 import { useCategoriesOptions } from "../../hooks/useCategoriesOptions";
+import ConfirmDialog from "../../common/ConfirmDialog";
+
 
 function useDebouncedValue<T>(value: T, delayMs: number): T {
   const [debounced, setDebounced] = useState(value);
@@ -38,12 +40,12 @@ function useDebouncedValue<T>(value: T, delayMs: number): T {
 export default function PostsPage(): JSX.Element {
   const [sp, setSp] = useSearchParams();
 
+
   const pageParam = Number(sp.get("page") || "1");
-  const limitParam = Number(sp.get("limit") || "10");
   const searchParam = sp.get("search") || "";
 
   const [page, setPage] = useState(Number.isFinite(pageParam) && pageParam > 0 ? pageParam : 1);
-  const [limit] = useState(Number.isFinite(limitParam) && limitParam > 0 ? limitParam : 10);
+  const [limit] = useState(10);
 
   const [search, setSearch] = useState(searchParam);
   const debouncedSearch = useDebouncedValue(search, 450);
@@ -55,9 +57,13 @@ export default function PostsPage(): JSX.Element {
 
   const { options: categories, loading: loadingCategories } = useCategoriesOptions();
 
+
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"create" | "edit">("create");
   const [current, setCurrent] = useState<PostDto | null>(null);
+  
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [toDelete, setToDelete] = useState<PostDto | null>(null);
 
   const queryKey = useMemo(
     () => ({
@@ -69,16 +75,17 @@ export default function PostsPage(): JSX.Element {
     [page, limit, debouncedSearch]
   );
 
+
   useEffect(() => {
     setSp((prev) => {
       const next = new URLSearchParams(prev);
       next.set("page", String(page));
-      next.set("limit", String(limit));
       if (search) next.set("search", search);
       else next.delete("search");
       return next;
-    });
-  }, [page, limit, search, setSp]);
+    }, { replace: true });
+  }, [page, search, setSp]);
+
 
   useEffect(() => {
     setPage(1);
@@ -102,12 +109,13 @@ export default function PostsPage(): JSX.Element {
     load();
   }, [queryKey]);
 
+
   const onCreate = () => {
     setMode("create");
     setCurrent(null);
     setOpen(true);
   };
-
+ 
   const onEdit = (p: PostDto) => {
     setMode("edit");
     setCurrent(p);
@@ -116,16 +124,12 @@ export default function PostsPage(): JSX.Element {
 
   const onSubmit = async (payload: { title: string; content: string; categoryId?: string | null }) => {
     try {
-      setError(null);
       if (mode === "create") {
         await createPost(payload);
-        setOpen(false);
         setPage(1);
-        await load();
-        return;
+      } else if (current) {
+        await updatePost(current.id, payload);
       }
-      if (!current) return;
-      await updatePost(current.id, payload);
       setOpen(false);
       await load();
     } catch {
@@ -133,46 +137,55 @@ export default function PostsPage(): JSX.Element {
     }
   };
 
-  const onDelete = async (id: string) => {
+  const askDelete = (p: PostDto) => {
+      setToDelete(p);
+      setConfirmOpen(true);
+  };
+  
+  const confirmDelete = async () => {
+    if (!toDelete) return;
     try {
-      setError(null);
-      await deletePost(id);
+      await deletePost(toDelete.id);
+      setConfirmOpen(false);
+      setToDelete(null);
       await load();
     } catch {
       setError("No se pudo eliminar el post.");
     }
   };
 
-  const categoryName = (p: PostDto) => {
-    const id = p.categoryId || p.category?.id || "";
+  const getCategoryName = (p: PostDto) => {
+    const id = p.categoryId || p.category?.id;
     if (!id) return "Sin categoría";
     const found = categories.find((c) => c.id === id);
     return found?.name || p.category?.name || "Categoría";
   };
 
   return (
-    <Stack spacing={2}>
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems={{ sm: "center" }}>
-        <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          Posts
-        </Typography>
-
-        <Button variant="contained" startIcon={<AddIcon />} onClick={onCreate} disabled={loadingCategories}>
-          Nuevo
+    <Stack spacing={2} sx={{ p: 3 }}>
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Typography variant="h4">Posts</Typography>
+        <Button 
+          variant="contained" 
+          startIcon={<AddIcon />} 
+          onClick={onCreate} 
+          disabled={loadingCategories}
+        >
+          Nuevo Post
         </Button>
       </Stack>
 
-      {error ? <Alert severity="error">{error}</Alert> : null}
+      {error && <Alert severity="error" onClose={() => setError(null)}>{error}</Alert>}
 
       <TextField
-        label="Buscar (por título)"
+        label="Buscar por título..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         fullWidth
       />
 
       {loading ? (
-        <CircularProgress />
+        <Stack alignItems="center"><CircularProgress /></Stack>
       ) : items.length === 0 ? (
         <Alert severity="info">No hay posts para mostrar.</Alert>
       ) : (
@@ -191,13 +204,13 @@ export default function PostsPage(): JSX.Element {
                   <TableRow key={p.id}>
                     <TableCell>{p.title}</TableCell>
                     <TableCell>
-                      <Chip size="small" label={categoryName(p)} />
+                      <Chip size="small" label={getCategoryName(p)} color="primary" variant="outlined" />
                     </TableCell>
                     <TableCell align="right">
-                      <IconButton onClick={() => onEdit(p)} aria-label="editar">
+                      <IconButton onClick={() => onEdit(p)} color="primary">
                         <EditIcon />
                       </IconButton>
-                      <IconButton onClick={() => onDelete(p.id)} aria-label="eliminar">
+                      <IconButton onClick={() => askDelete(p)} color="error">
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
@@ -207,19 +220,32 @@ export default function PostsPage(): JSX.Element {
             </Table>
           </TableContainer>
 
-          <Stack direction="row" justifyContent="center" sx={{ py: 1 }}>
-            <Pagination count={totalPages} page={page} onChange={(_, v) => setPage(v)} />
+          <Stack direction="row" justifyContent="center">
+            <Pagination 
+              count={totalPages} 
+              page={page} 
+              onChange={(_, v) => setPage(v)} 
+              color="primary"
+            />
           </Stack>
         </>
       )}
+
+      
 
       <PostFormDialog
         open={open}
         mode={mode}
         initial={current}
-        categories={categories}
         onClose={() => setOpen(false)}
-        onSubmit={onSubmit}
+        onSubmit={onSubmit} categories={[]}      />
+
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Confirmar eliminación"
+        description={`¿Estás seguro de que deseas eliminar el post "${toDelete?.title || ""}"?`}
+        onCancel={() => { setConfirmOpen(false); setToDelete(null); }}
+        onConfirm={confirmDelete}
       />
     </Stack>
   );
